@@ -1,4 +1,5 @@
 import { Component } from 'react';
+import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import css from './searchbar.module.css';
 
 export class Searchbar extends Component {
@@ -10,17 +11,18 @@ export class Searchbar extends Component {
     e.preventDefault();
     const { query } = this.state;
     const { onSubmit } = this.props;
-    onSubmit(query);
-    this.setState({
-      query: '',
-    });
-
-    // console.log(this.state);
-    // console.log(this.state.query);
+    if (query) {
+      onSubmit(query);
+      this.setState({
+        query: '',
+      });
+    } else {
+      Notify.warning("You didn't enter anything to search");
+    }
   };
 
   handleChange = e => {
-    this.setState({ query: e.target.value });
+    this.setState({ [e.target.name]: e.target.value });
   };
 
   render() {
@@ -37,7 +39,7 @@ export class Searchbar extends Component {
           </button>
 
           <input
-            name="search"
+            name="query"
             className={css.input}
             type="text"
             autoComplete="off"
