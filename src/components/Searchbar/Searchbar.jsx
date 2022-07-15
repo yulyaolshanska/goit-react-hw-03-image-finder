@@ -1,6 +1,13 @@
 import { Component } from 'react';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
-import css from './searchbar.module.css';
+// import css from './searchbar.module.css';
+import {
+  SearchForm,
+  SearchFormButton,
+  SearchFormInput,
+  SearchFormLabel,
+  SearchbarHeader,
+} from './searchbar.styled';
 
 export class Searchbar extends Component {
   state = {
@@ -28,19 +35,14 @@ export class Searchbar extends Component {
   render() {
     const { query } = this.state;
     return (
-      <header className={css.searchbar}>
-        <form
-          onSubmit={this.handleSubmit}
-          onChange={this.handleChange}
-          className={css.form}
-        >
-          <button type="submit" className={css.button}>
-            <span className={css.buttonLabel}>Search</span>
-          </button>
+      <SearchbarHeader>
+        <SearchForm onSubmit={this.handleSubmit} onChange={this.handleChange}>
+          <SearchFormButton type="submit">
+            <SearchFormLabel>Search</SearchFormLabel>
+          </SearchFormButton>
 
-          <input
+          <SearchFormInput
             name="query"
-            className={css.input}
             type="text"
             autoComplete="off"
             autoFocus
@@ -48,8 +50,8 @@ export class Searchbar extends Component {
             value={query}
             onChange={this.handleChange}
           />
-        </form>
-      </header>
+        </SearchForm>
+      </SearchbarHeader>
     );
   }
 }
