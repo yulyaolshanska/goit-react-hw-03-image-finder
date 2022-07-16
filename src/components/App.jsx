@@ -13,6 +13,7 @@ export class App extends Component {
     loading: false,
     showModal: false,
     bigImg: '',
+    imgAlt: '',
   };
 
   formData = data => {
@@ -22,12 +23,12 @@ export class App extends Component {
     });
   };
 
-  toggleModal = () => {
+  toggleModal = e => {
     this.setState(({ showModal }) => ({ showModal: !showModal }));
   };
 
-  getBigImage = img => {
-    this.setState({ bigImg: img });
+  getBigImageAndAlt = (img, alt) => {
+    this.setState({ bigImg: img, imgAlt: alt });
   };
 
   async componentDidUpdate(prevProps, prevState) {
@@ -51,20 +52,26 @@ export class App extends Component {
   }
 
   render() {
-    const { resolve, loading, showModal, bigImg } = this.state;
+    const { resolve, loading, showModal, bigImg, imgAlt } = this.state;
     // const bigImg = resolve.largeImageURL;
-    // console.log(bigImg);
+    console.log(imgAlt);
 
     return (
       <div>
         <Searchbar onSubmit={this.formData} />
         {loading && <Loader />}
         <ImageGallery
-          getBigImage={this.getBigImage}
+          getBigImageAndAlt={this.getBigImageAndAlt}
           modalOpen={this.toggleModal}
           images={resolve}
         />
-        {showModal && <Modal imgSrc={bigImg} />}
+        {showModal && (
+          <Modal
+            closeModal={this.toggleModal}
+            imgSrc={bigImg}
+            imgAlt={imgAlt}
+          />
+        )}
       </div>
     );
   }

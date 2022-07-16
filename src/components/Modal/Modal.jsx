@@ -2,16 +2,32 @@ import { Component } from 'react';
 import { Overlay, ModalBox } from './modal.styled';
 
 export class Modal extends Component {
-  state = {};
+  componentDidMount() {
+    window.addEventListener('keydown', this.handleKeyDown);
+  }
+  componentWillUnmount() {
+    window.removeEventListener('keydown', this.handleKeyDown);
+  }
+
+  handleKeyDown = e => {
+    if (e.code === 'Escape') {
+      this.props.closeModal();
+    }
+  };
+
+  handleBackdropClick = e => {
+    if (e.target === e.currentTarget) {
+      this.props.closeModal();
+    }
+  };
 
   render() {
-    const { imgSrc } = this.props;
-    // console.log(this.props);
+    const { imgSrc, imgAlt } = this.props;
+    console.log(imgAlt);
     return (
-      <Overlay>
+      <Overlay onClick={this.handleBackdropClick}>
         <ModalBox>
-          hghghgh
-          <img src={imgSrc} alt="" />
+          <img src={imgSrc} alt={imgAlt} />
         </ModalBox>
       </Overlay>
     );

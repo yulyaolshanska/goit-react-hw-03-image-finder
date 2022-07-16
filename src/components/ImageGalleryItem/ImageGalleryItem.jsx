@@ -6,16 +6,19 @@ export const ImageGalleryItem = ({
   imgAlt,
   modalOpen,
   bigImg,
-  getBigImage,
+  getBigImageAndAlt,
+  id,
 }) => {
   //   getBigImage(bigImg);
   return (
-    <GalleryItem onClick={modalOpen}>
-      <GalleryImage
-        src={imgSrc}
-        alt={imgAlt}
-        onClick={() => getBigImage(bigImg)}
-      />
+    <GalleryItem
+      id={id}
+      onClick={() => {
+        getBigImageAndAlt(bigImg, imgAlt);
+        modalOpen();
+      }}
+    >
+      <GalleryImage src={imgSrc} alt={imgAlt} />
     </GalleryItem>
   );
 };
