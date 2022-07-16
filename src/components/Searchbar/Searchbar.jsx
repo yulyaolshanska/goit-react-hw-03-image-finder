@@ -23,7 +23,7 @@ export class Searchbar extends Component {
       this.setState({
         query: '',
       });
-    } else {
+    } else if (query === '') {
       Notify.warning("You didn't enter anything to search");
     }
   };

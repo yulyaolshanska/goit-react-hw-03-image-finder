@@ -2,7 +2,12 @@ import { ImageGalleryItem } from 'components/ImageGalleryItem/ImageGalleryItem';
 import { ImageGalleryList } from './imageGallery.styled';
 // import { Modal } from 'components/Modal/Modal';
 
-export const ImageGallery = ({ images, modalOpen, getBigImageAndAlt }) => {
+export const ImageGallery = ({
+  images,
+  modalOpen,
+  getBigImageAndAlt,
+  // children,
+}) => {
   return (
     <ImageGalleryList>
       {images.map(image => {
@@ -18,6 +23,7 @@ export const ImageGallery = ({ images, modalOpen, getBigImageAndAlt }) => {
           />
         );
       })}
+      {/* {children} */}
     </ImageGalleryList>
   );
 };
