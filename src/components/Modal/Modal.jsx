@@ -1,5 +1,6 @@
 import { Component } from 'react';
 import { Overlay, ModalBox } from './modal.styled';
+import PropTypes from 'prop-types';
 
 export class Modal extends Component {
   componentDidMount() {
@@ -23,7 +24,6 @@ export class Modal extends Component {
 
   render() {
     const { imgSrc, imgAlt } = this.props;
-    console.log(imgAlt);
     return (
       <Overlay onClick={this.handleBackdropClick}>
         <ModalBox>
@@ -33,3 +33,10 @@ export class Modal extends Component {
     );
   }
 }
+
+Modal.propTypes = {
+  imgSrc: PropTypes.string.isRequired,
+  imgAlt: PropTypes.string.isRequired,
+
+  closeModal: PropTypes.func.isRequired,
+};

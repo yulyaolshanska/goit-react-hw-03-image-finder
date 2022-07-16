@@ -1,5 +1,6 @@
 import { Component } from 'react';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
+import PropTypes from 'prop-types';
 // import css from './searchbar.module.css';
 import {
   SearchForm,
@@ -55,3 +56,5 @@ export class Searchbar extends Component {
     );
   }
 }
+
+Searchbar.propTypes = { onSubmit: PropTypes.func.isRequired };

@@ -8,6 +8,7 @@ import { fetchImage } from '../services/ApiServices';
 import { Modal } from 'components/Modal/Modal';
 import { Button } from 'components/Button/Button';
 import { Notification } from 'components/Notification/Notification';
+import { AppBox } from './app.styled';
 
 export class App extends Component {
   state = {
@@ -46,8 +47,6 @@ export class App extends Component {
 
   async componentDidUpdate(prevProps, prevState) {
     const { searchImg, page } = this.state;
-    // console.log(prevState.searchImg);
-    // console.log(this.state.searchImg);
 
     if (
       prevState.searchImg !== this.state.searchImg ||
@@ -57,7 +56,6 @@ export class App extends Component {
         this.setState({ loading: true });
         const resolve = await fetchImage(searchImg, page);
         const resolveArr = resolve.data.hits;
-        // console.log(resolveArr);
 
         if (resolveArr.length === 0) {
           Notify.warning(
@@ -65,22 +63,13 @@ export class App extends Component {
           );
           this.setState({ loading: false, resolve: [] });
         } else {
-          console.log(resolve);
-
           this.setState(prevState => ({
             resolve: [...prevState.resolve, ...resolveArr],
             loading: false,
             showLoadMore: true,
             totalImages: resolve.data.totalHits,
-            // bigImg: largeImages,
           }));
         }
-        // const largeImages = resolveArr.map(image => image.largeImageURL);
-
-        // if (prevState.searchImg === this.state.searchImg) {
-        //   Notify.warning('You enter the same');
-        // }
-        // console.log(this.state);
       } catch (err) {
         console.log(err);
       }
@@ -88,21 +77,11 @@ export class App extends Component {
   }
 
   render() {
-    const {
-      resolve,
-      loading,
-      showModal,
-      bigImg,
-      imgAlt,
-      showLoadMore,
-      totalImages,
-    } = this.state;
-    // const bigImg = resolve.largeImageURL;
-    console.log(resolve.length);
-    console.log(totalImages);
+    const { resolve, loading, showModal, bigImg, imgAlt, totalImages } =
+      this.state;
 
     return (
-      <>
+      <AppBox>
         <Searchbar onSubmit={this.formData} />
         {loading && <Loader />}
         <ImageGallery
@@ -124,7 +103,7 @@ export class App extends Component {
             imgAlt={imgAlt}
           />
         )}
-      </>
+      </AppBox>
     );
   }
 }
