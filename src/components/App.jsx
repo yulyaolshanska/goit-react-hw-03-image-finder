@@ -46,7 +46,8 @@ export class App extends Component {
   };
 
   async componentDidUpdate(prevProps, prevState) {
-    const { searchImg, page } = this.state;
+    const prevFoto = prevState.searchImg;
+    const currentFoto = this.state.searchImg;
 
     if (
       prevState.searchImg !== this.state.searchImg ||
@@ -54,21 +55,29 @@ export class App extends Component {
     ) {
       try {
         this.setState({ loading: true });
-        const resolve = await fetchImage(searchImg, page);
+        const resolve = await fetchImage(this.state.searchImg, this.state.page);
         const resolveArr = resolve.data.hits;
 
+        this.setState(prevState => ({
+          resolve: [...prevState.resolve, ...resolveArr],
+          loading: false,
+          showLoadMore: true,
+          totalImages: resolve.data.totalHits,
+        }));
+
+        if (prevFoto !== currentFoto) {
+          this.setState({
+            resolve: [...resolveArr],
+            loading: false,
+            showLoadMore: true,
+            totalImages: resolve.data.totalHits,
+          });
+        }
         if (resolveArr.length === 0) {
           Notify.warning(
             ' Sorry, there are no images matching your search query. Please try again.'
           );
           this.setState({ loading: false, resolve: [] });
-        } else {
-          this.setState(prevState => ({
-            resolve: [...prevState.resolve, ...resolveArr],
-            loading: false,
-            showLoadMore: true,
-            totalImages: resolve.data.totalHits,
-          }));
         }
       } catch (err) {
         console.log(err);
