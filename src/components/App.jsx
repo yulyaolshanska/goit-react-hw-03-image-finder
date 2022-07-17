@@ -73,6 +73,7 @@ export class App extends Component {
             totalImages: resolve.data.totalHits,
           });
         }
+
         if (resolveArr.length === 0) {
           Notify.warning(
             ' Sorry, there are no images matching your search query. Please try again.'

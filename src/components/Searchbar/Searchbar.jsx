@@ -21,9 +21,9 @@ export class Searchbar extends Component {
     const { onSubmit } = this.props;
     if (query) {
       onSubmit(query);
-      this.setState({
-        query: '',
-      });
+      // this.setState({
+      //   query: '',
+      // });
     } else if (query === '') {
       Notify.warning("You didn't enter anything to search");
     }
